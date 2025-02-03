@@ -3,8 +3,9 @@ import PostCard from '../components/PostCard';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
-  return (
+return (
     <div className="bg-gray-50 text-gray-800 min-h-screen">
       {/* Navbar */}
       <nav className="bg-white shadow p-4 flex justify-between items-center">
@@ -21,7 +22,7 @@ const Home = () => {
             <>
               <button
                 className="bg-green-500 text-white px-4 py-2 rounded mr-2 hover:bg-green-600"
-                onClick={() => setIsLoggedIn(true)}
+                onClick={() => true}
               >
                 Login
               </button>

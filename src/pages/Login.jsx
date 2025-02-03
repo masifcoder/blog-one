@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Form, Input, Button, Card } from "antd";
 import { useNavigate, Link } from 'react-router-dom';
+import { CheckAuth } from '../context/CheckAuth';
 
 const Login = () => {
+    const authCtx = useContext(CheckAuth);
+
 
     const navigate = useNavigate();
 
     const onFinish = (values) => {
         console.log("Login Success:", values);
-        navigate("/");
+        
+        authCtx.setIsLogin(true);
+
+        navigate("/dashboard");
     };
 
 
