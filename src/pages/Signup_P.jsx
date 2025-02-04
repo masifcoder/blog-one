@@ -3,56 +3,53 @@ import { useNavigate, Link } from "react-router-dom";
 import { Form, Input, Button, Card, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from 'axios';
+import Password from 'antd/es/input/Password';
 
 export const Signup = () => {
 
   const navigate = useNavigate();
-  const [fileList, setFileList] = useState(null);
+  const [image, setImage] = useState(null);
+  const [fileList, setFileList] = useState([]);
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // runs on form submit  
   const onFinish = (values) => {
-    setLoading(true)
     console.log("Signup Success:", values);
 
-    // sending multipart form data
-    let formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-    formData.append("image", fileList[0].originFileObj);
+    let formdata = new FormData();
 
+    formdata.append("email", values.email);
+    formdata.append("name", "santa");
+    formdata.append("password", values.password);
+    formdata.append("image", fileList[0].originFileObj);
 
-    axios.post("http://localhost:3003/user/signup", formData, {
+    // send to api
+    axios.post("http://localhost:3003/user/signup", formdata, {
       headers: {
-        "Content-Type": "multipart/form-data"
+        "Content-Type": "multipart/form-data",
+        "Authorization": "Bearer asdfsadfsadf"
       }
     }).then((res) => {
+      console.log(res)
+    }).catch(er => {
+      console.log(er.response.data.errors);
+      setErrors(er.response.data.errors);
 
-      console.log(res.data)
-      navigate("/login")
+    })
 
-    }).catch((err) => {
 
-      console.log(err.response.data)
-      setErrors(err.response.data.errors);
-
-    }).finally( () =>  setLoading(false))
 
     // navigate("/");
   };
 
-
-  // runs when we select file
-  const handleUpload = (info) => {
-    setFileList(info.fileList);
+  const handleUploadChange = ({ fileList }) => {
+    setFileList(fileList);
   };
+
 
 
   return (
     <Card title="Sign Up" style={{ width: 560, margin: "auto", marginTop: 100 }}>
-
       {
         errors && <div className='bg-red-100 p-5 rounded-sm mb-4'>
           <h4 className='text-red-400 text-xl font-bold mt-4'>Errors occured</h4>
@@ -74,9 +71,6 @@ export const Signup = () => {
       }
 
       <Form onFinish={onFinish}>
-        <Form.Item name="name" rules={[{ required: true, message: "Please enter your name!", type: "text" }]}>
-          <Input size="large" placeholder="Name" />
-        </Form.Item>
         <Form.Item name="email" rules={[{ required: true, message: "Please enter your email!", type: "email" }]}>
           <Input size="large" placeholder="Email" />
         </Form.Item>
@@ -101,12 +95,12 @@ export const Signup = () => {
           <Input.Password size='large' placeholder="Confirm Password" />
         </Form.Item>
         <Form.Item>
-          <Upload beforeUpload={() => false} onChange={handleUpload} fileList={fileList}>
+          <Upload beforeUpload={() => false} onChange={handleUploadChange} fileList={fileList}>
             <Button size='large' icon={<UploadOutlined />}>Upload Profile Image</Button>
           </Upload>
         </Form.Item>
         <Form.Item>
-          <Button loading={loading} size='large' type="primary" htmlType="submit" block>Sign Up</Button>
+          <Button size='large' type="primary" htmlType="submit" block>Sign Up</Button>
         </Form.Item>
       </Form>
       <Link to="/login">Already have an account? Login</Link>

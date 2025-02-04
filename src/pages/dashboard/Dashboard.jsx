@@ -1,21 +1,23 @@
 import React, { useContext, useEffect } from 'react'
-import { CheckAuth } from '../../context/CheckAuth'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 
 const Dashboard = () => {
-  const authCtx = useContext(CheckAuth);
   const navigator = useNavigate();
+  const AuthCtx = useContext(AuthContext);
 
-  console.log(authCtx.isLogin);
 
+  console.log(AuthCtx);
+
+  
   const logout = () => {
-    authCtx.setIsLogin(false);
-    navigator("/login")
+    AuthCtx.logout();
+    navigator("/login");
   }
 
   useEffect(() => {
-    if (authCtx.isLogin === false) {
+    if(AuthCtx.isLogin === false) {
       navigator("/login")
     }
   }, []);
