@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PostCard from '../components/PostCard';
+import axios from 'axios';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+  const [posts, setPosts] = useState([]);
 
-return (
+
+  useEffect(() => {
+    axios.get("http://localhost:3003/post/all").then((res) => {
+      setPosts(res.data.posts)
+    })
+  }, []);
+
+
+
+  return (
     <div className="bg-gray-50 text-gray-800 min-h-screen">
       {/* Navbar */}
       <nav className="bg-white shadow p-4 flex justify-between items-center">
@@ -43,9 +53,11 @@ return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Main Content */}
           <main className="md:col-span-2 space-y-6">
-           <PostCard />
-           <PostCard />
-           <PostCard />
+            {
+              posts.map((post, index) => {
+                return (<PostCard post={post} key={index} />)
+              })
+            }
           </main>
 
           {/* Sidebar */}
