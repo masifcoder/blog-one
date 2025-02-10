@@ -62,7 +62,7 @@ const SinglePost = () => {
 
                 {/* Content */}
                 <div className="prose prose-lg max-w-none">
-                    <p>{post && post.content}</p>
+                    <p dangerouslySetInnerHTML={{__html: post && post.content}} className="text-gray-600 mt-2"></p>
                 </div>
             </div>
         </div>

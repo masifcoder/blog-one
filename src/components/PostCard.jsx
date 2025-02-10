@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const PostCard = ({post}) => {
+  
   return (
     <article key='' className="bg-white p-4 rounded-lg shadow flex">
       <img
@@ -13,7 +14,7 @@ const PostCard = ({post}) => {
       <div>
         <Link to={`/post/${post._id}`}><h3 className="text-2xl font-semibold text-blue-500">{post.title}</h3></Link>
         <p className="text-gray-600 mt-2">
-          {post.content}
+          {post && post.content}
         </p>
         {/* <a href="#" className="text-blue-400 hover:underline">Read more</a> */}
       </div>

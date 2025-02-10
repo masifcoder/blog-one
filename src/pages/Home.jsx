@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PostCard from '../components/PostCard';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Home = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   const [posts, setPosts] = useState([]);
 
 
@@ -18,32 +20,7 @@ const Home = () => {
   return (
     <div className="bg-gray-50 text-gray-800 min-h-screen">
       {/* Navbar */}
-      <nav className="bg-white shadow p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-blue-600">My Blog</h1>
-        <div>
-          {isLoggedIn ? (
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              onClick={() => setIsLoggedIn(false)}
-            >
-              Dashboard
-            </button>
-          ) : (
-            <>
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded mr-2 hover:bg-green-600"
-                onClick={() => true}
-              >
-                Login
-              </button>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Sign Up
-              </button>
-            </>
-          )}
-        </div>
-      </nav>
-
+      <Navbar />
       <div className="container mx-auto p-4">
         <header className="mb-6 text-center">
           <h2 className="text-4xl font-bold text-blue-600">Welcome to My Blog</h2>
@@ -75,9 +52,7 @@ const Home = () => {
           </aside>
         </div>
 
-        <footer className="mt-8 text-center text-gray-500">
-          © 2025 My Blog. All rights reserved.
-        </footer>
+       <Footer />
       </div>
     </div>
   );
