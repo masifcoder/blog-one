@@ -25,7 +25,7 @@ function App() {
 
         {/* child routing */}
         <Route path='/dashboard' element={<DashboardLayout />}>
-            <Route path='user' element={<Dashboard />} />
+            <Route index element={<Dashboard />} />
             <Route path='create' element={<CreatePost />} />
         </Route>
 

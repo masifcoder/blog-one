@@ -25,8 +25,9 @@ const DashboardLayout = () => {
               <h2 className="text-4xl font-bold text-blue-600">Welcome to My Blog</h2>
               <p className="text-gray-600">Insights, Stories, and Ideas</p>
             </header>
-
-            <Outlet />
+            <div className='child-components'>
+              <Outlet />
+            </div>
 
           </div>
         </div>

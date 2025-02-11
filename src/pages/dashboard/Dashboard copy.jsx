@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import PostsDataTable from '../../components/PostsDataTable';
-
+import PostCard from '../../components/PostCard';
+import Datatable from '../../components/Datatable';
+import ReactDataTable from '../../components/ReactDataTable';
 
 
 const Dashboard = () => {
@@ -10,15 +11,10 @@ const Dashboard = () => {
 
 
   useEffect(() => {
-
-    axios.get("http://localhost:3003/post/all").then(res => {
-
-      console.log(res)
-      setPosts(res.data.posts);
-
-    }).catch(err => console.log(err.message))
-  }, [])
-
+    axios.get("http://localhost:3003/post/all").then((res) => {
+      setPosts(res.data.posts)
+    })
+  }, []);
 
 
   return (
@@ -26,7 +22,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="md:col-span-2 space-y-6">
 
-        <PostsDataTable posts={posts} />
+        <ReactDataTable data={posts} />
 
       </main>
 
