@@ -9,6 +9,8 @@ import DashboardLayout from './pages/dashboard/DashboardLayout';
 import CreatePost from './pages/dashboard/CreatePost';
 import SinglePost from './pages/SinglePost';
 import Notfound from './pages/Notfound';
+import { ToastContainer } from 'react-toastify';
+
 
 
 function App() {
@@ -25,12 +27,13 @@ function App() {
 
         {/* child routing */}
         <Route path='/dashboard' element={<DashboardLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path='create' element={<CreatePost />} />
+          <Route index element={<Dashboard />} />
+          <Route path='create' element={<CreatePost />} />
         </Route>
 
-        <Route path='*' element={<Notfound /> } />
+        <Route path='*' element={<Notfound />} />
       </Routes>
+      <ToastContainer />
     </>
   )
 }

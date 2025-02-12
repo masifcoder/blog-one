@@ -2,14 +2,16 @@ import React from 'react'
 import DataTable from 'react-data-table-component';
 
 
-const PostsDataTable = ({ posts }) => {
+const PostsDataTable = ({ posts, onDelete }) => {
 
 
 
+    // delete call
     const handleDelete = (id) => {
-        console.log("deleted")
+        onDelete(id);
     }
 
+    // handle edit
     const handleEdit = (id) => {
 
     }
@@ -23,10 +25,6 @@ const PostsDataTable = ({ posts }) => {
             name: 'Title',
             selector: row => row.title,
             sortable: true,
-        },
-        {
-            name: 'Excerpt',
-            selector: row => row.excerpt,
         },
         {
             name: 'Status',

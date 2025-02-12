@@ -1,23 +1,70 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PostsDataTable from '../../components/PostsDataTable';
-
-
+import { AuthContext } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
 
   const [posts, setPosts] = useState([]);
+  const ctx = useContext(AuthContext);
+
+  const notifyError = (msg) => toast.error(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: false
+  });
+
+  const notifySuccess = (msg) => toast.success(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: false
+  });
 
 
+  // get all posts by user
   useEffect(() => {
 
-    axios.get("http://localhost:3003/post/all").then(res => {
+    axios.get("http://localhost:3003/post/all/user", {
+      headers: {
+        "Authorization": `Bearer ${ctx.token}`
+      }
+    }).then(res => {
 
       console.log(res)
       setPosts(res.data.posts);
 
     }).catch(err => console.log(err.message))
-  }, [])
+  }, []);
+
+
+
+  // delete function
+  const handleDelete = async (id) => {
+    try {
+
+      await axios.delete(`http://localhost:3003/post/delete/${id}`, {
+        headers: {
+          "Authorization": `Bearer ${ctx.token}`
+        }
+      });
+
+      // sucess remove id posts 
+      setPosts( (prevPosts) => {
+          const newPosts = prevPosts.filter( (p) => p._id !== id);
+          return newPosts;
+      });
+
+      notifySuccess("Post successfully deleted");
+
+    } catch (er) {
+      console.log(er);
+      notifyError(er.response.data.errors);
+    }
+
+  }
 
 
 
@@ -26,7 +73,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="md:col-span-2 space-y-6">
 
-        <PostsDataTable posts={posts} />
+        <PostsDataTable posts={posts} onDelete={handleDelete} />
 
       </main>
 
