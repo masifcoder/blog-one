@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import './App.css'
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -14,8 +13,6 @@ import { ToastContainer } from 'react-toastify';
 
 
 function App() {
-  const [count, setCount] = useState(0);
-
 
   return (
     <>

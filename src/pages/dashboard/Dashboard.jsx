@@ -3,11 +3,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import PostsDataTable from '../../components/PostsDataTable';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
 
   const [posts, setPosts] = useState([]);
   const ctx = useContext(AuthContext);
+  const navigator = useNavigate();
 
   const notifyError = (msg) => toast.error(msg, {
     position: "top-right",
@@ -36,7 +38,13 @@ const Dashboard = () => {
       console.log(res)
       setPosts(res.data.posts);
 
-    }).catch(err => console.log(err.message))
+    }).catch((err) => {
+      // authentication failed 401 due to bad token  
+      if (err.status === 401) {
+        ctx.logout();
+        navigator("/");
+      }
+    })
   }, []);
 
 
@@ -52,9 +60,9 @@ const Dashboard = () => {
       });
 
       // sucess remove id posts 
-      setPosts( (prevPosts) => {
-          const newPosts = prevPosts.filter( (p) => p._id !== id);
-          return newPosts;
+      setPosts((prevPosts) => {
+        const newPosts = prevPosts.filter((p) => p._id !== id);
+        return newPosts;
       });
 
       notifySuccess("Post successfully deleted");
